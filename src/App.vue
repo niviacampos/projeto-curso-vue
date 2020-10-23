@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <v-app>
+        <app-header />
+
+        <v-main>
+            <router-view />
+        </v-main>
+        <!-- Indica de onde as rotas serão renderizadas -->
+
+        <feedback />
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// key api google books: AIzaSyCQh-2odmCiyxLAZezOr7ozhNe3Me33frE
+    import AppHeader from './components/header/AppHeader.vue';
+    import Feedback from './components/feedback/Feedback.vue';
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        name: 'App',
+        components: { AppHeader, Feedback },
+        created() {
+            if (window.localStorage.authToken) {
+                this.$store.commit('setAuthToken', window.localStorage.authToken);
+            } else {
+                this.$router.push('/');
+            }
+        },
+    };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
